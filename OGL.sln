@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OGL", "OGL\OGL.vcxproj", "{811E48DB-36AB-48B9-A51C-BAFC1CCE4753}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GhostSchool", "GhostSchool\GhostSchool.vcxproj", "{6362FADD-C9A2-4054-BE7F-D77C71EB1EAD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GhostSchool", "..\GhostSchool\GhostSchool.vcxproj", "{6362FADD-C9A2-4054-BE7F-D77C71EB1EAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

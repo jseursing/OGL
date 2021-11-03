@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\IMGProcessor.h" />
     <ClInclude Include="..\include\OGLApp.h" />
     <ClInclude Include="..\include\OGLExt.h" />
     <ClInclude Include="..\include\OGLSpriteMgr.h" />
@@ -30,6 +31,7 @@
     <ClInclude Include="..\include\WAVSoundEffect.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\source\IMGProcessor.cpp" />
     <ClCompile Include="..\source\OGLApp.cpp" />
     <ClCompile Include="..\source\OGLExt.cpp" />
     <ClCompile Include="..\source\OGLSpriteMgr.cpp" />

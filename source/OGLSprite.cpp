@@ -1,3 +1,4 @@
+#include "IMGProcessor.h"
 #include "OGLExt.h"
 #include "OGLSprite.h"
 #include <SOIL.h>
@@ -378,7 +379,6 @@ OGLSprite::OGLSprite(uint32_t programId,
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  TransformId = glGetUniformLocation(ProgramId, "transform");
 
   // Load the image using SOIL
   ImageBuffer = SOIL_load_image(imagePath, 
