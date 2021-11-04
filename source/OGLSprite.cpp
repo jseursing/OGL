@@ -282,7 +282,8 @@ void OGLSprite::UpdateImage(int32_t x,
                             int32_t h,
                             uint8_t r, 
                             uint8_t g, 
-                            uint8_t b)
+                            uint8_t b,
+                            uint8_t a)
 {
   if (nullptr != ImageBuffer)
   {
@@ -295,7 +296,7 @@ void OGLSprite::UpdateImage(int32_t x,
         for (int l = 0; l < w; ++l)
         {
           uint32_t* rgbWord = reinterpret_cast<uint32_t*>(ImageBuffer);
-          uint32_t newColor = (r << 24) | (g << 16) | (b << 8);
+          uint32_t newColor = (r << 24) | (g << 16) | (b << 8) | a;
           rgbWord[((y + t) * SheetWidth) + x + l] = newColor;
         }
       }
@@ -362,7 +363,8 @@ OGLSprite::OGLSprite(uint32_t programId,
   WindowHeight(windowH),
   HFrameCount(hFrames),
   VFrameCount(vFrames),
-  TotalFrames(hFrames * vFrames)
+  TotalFrames(hFrames * vFrames),
+  IsImage(true)
 {
   // Initialize Buffers
   glGenVertexArrays(1, &VertexArrayObj);
@@ -416,6 +418,84 @@ OGLSprite::OGLSprite(uint32_t programId,
 }
 
 // --------------------------------------------------------------------------------------
+// Function: OGLSprite
+// Notes: None
+// --------------------------------------------------------------------------------------
+OGLSprite::OGLSprite(uint32_t programId,
+                     float windowW,
+                     float windowH,
+                     uint32_t pixelWidth,
+                     uint32_t pixelHeight,
+                     uint32_t hFrames,
+                     uint32_t vFrames) :
+  ProgramId(programId),
+  TextureId(0),
+  TransformId(glGetUniformLocation(ProgramId, "transform")),
+  TranslateId(glGetUniformLocation(ProgramId, "translate")),
+  ImageBuffer(nullptr),
+  BackupBuffer(nullptr),
+  X(0.0f),
+  Y(0.0f),
+  AbsX(0.0f),
+  AbsY(0.0f),
+  Degree(0.0f),
+  RenderEnabled(true),
+  ActiveFrame(0),
+  FrameWidth(0.0f),
+  FrameHeight(0.0f),
+  WindowWidth(windowW),
+  WindowHeight(windowH),
+  SheetWidth(pixelWidth),
+  SheetHeight(pixelHeight),
+  HFrameCount(hFrames),
+  VFrameCount(vFrames),
+  TotalFrames(hFrames* vFrames),
+  IsImage(false)
+{
+  // Initialize Buffers
+  glGenVertexArrays(1, &VertexArrayObj);
+  glGenBuffers(1, &VertexBufferObj);
+  glGenBuffers(1, &IndexBufferObj);
+
+  // Bind Vertex Array Object
+  glBindVertexArray(VertexArrayObj);
+
+  // Initialize texture
+  glGenTextures(1, &TextureId);
+  glBindTexture(GL_TEXTURE_2D, TextureId);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+  // Load the image using SOIL
+  ImageBuffer = reinterpret_cast<uint8_t*>(new uint32_t[SheetWidth * SheetHeight]);
+  
+  memset(ImageBuffer, 1, SheetWidth * SheetHeight * sizeof(uint32_t));
+  UploadImage = true;
+
+  // Initialize Textures
+  FrameWidth = static_cast<float>(SheetWidth) / HFrameCount;
+  FrameHeight = static_cast<float>(SheetHeight) / VFrameCount;
+
+  Textures.resize(TotalFrames);
+  for (size_t v = 0; v < VFrameCount; ++v)
+  {
+    for (size_t h = 0; h < HFrameCount; ++h)
+    {
+      int32_t index = (v * HFrameCount) + h;
+      Textures[index].left = FrameWidth * h;
+      Textures[index].right = Textures[index].left + FrameWidth;
+      Textures[index].top = FrameHeight * v;
+      Textures[index].bottom = Textures[index].top + FrameHeight;
+    }
+  }
+
+  // Initialize first frame
+  SetActiveFrame(0);
+}
+
+// --------------------------------------------------------------------------------------
 // Function: ~OGLSprite
 // Notes: None
 // --------------------------------------------------------------------------------------
@@ -427,6 +507,13 @@ OGLSprite::~OGLSprite()
   glDeleteTextures(1, &TextureId);
   glDeleteProgram(ProgramId);
 
-  SOIL_free_image_data(ImageBuffer);
+  if (true == IsImage)
+  {
+    SOIL_free_image_data(ImageBuffer);
+  }
+  else
+  {
+    delete[] ImageBuffer;
+  }
 }
 

@@ -13,6 +13,13 @@ public:
                  float windowH,
                  uint32_t hFrames,
                  uint32_t vFrames);
+  OGLTimedSprite(uint32_t programId,
+                 float windowW,
+                 float windowH,
+                 uint32_t pixelWidth,
+                 uint32_t pixelHeight,
+                 uint32_t hFrames,
+                 uint32_t vFrames);
   virtual ~OGLTimedSprite();
 
 protected:

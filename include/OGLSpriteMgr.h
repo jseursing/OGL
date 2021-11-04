@@ -17,6 +17,12 @@ public:
                             const char* imagePath, 
                             uint32_t hFrames, 
                             uint32_t vFrames);
+  OGLSprite* RegisterSprite(uint32_t programId,
+                            const char* textureName,
+                            uint32_t pixelWidth,
+                            uint32_t pixelHeight, 
+                            uint32_t hFrames, 
+                            uint32_t vFrames);
   void RegisterSprite(OGLSprite* sprite, const char* textureName);
   OGLSprite* GetSprite(uint32_t index);
   void Render();

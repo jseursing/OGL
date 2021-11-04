@@ -29,7 +29,8 @@ public:
                    int32_t h, 
                    uint8_t r, 
                    uint8_t g, 
-                   uint8_t b);
+                   uint8_t b,
+                   uint8_t a = 1);
   void InvertImage();
   
   OGLSprite(uint32_t programId,
@@ -37,6 +38,13 @@ public:
             float windowW,
             float windowH,
             uint32_t hFrames, 
+            uint32_t vFrames);
+  OGLSprite(uint32_t programId,
+            float windowW,
+            float windowH,
+            uint32_t pixelWidth,
+            uint32_t pixelHeight,
+            uint32_t hFrames,
             uint32_t vFrames);
   virtual ~OGLSprite();
 
@@ -66,6 +74,7 @@ private:
   uint8_t* BackupBuffer;
   uint32_t ActiveFrame;
   bool UploadImage;
+  bool IsImage;
   
   enum VerticeEnum
   {

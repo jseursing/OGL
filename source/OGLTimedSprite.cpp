@@ -11,7 +11,7 @@ void OGLTimedSprite::StartRender(uint32_t ticks)
 }
 
 // --------------------------------------------------------------------------------------
-// Function: SetCharacterMapping
+// Function: Render
 // Notes: None
 // --------------------------------------------------------------------------------------
 void OGLTimedSprite::Render(uint32_t texId)
@@ -28,7 +28,7 @@ void OGLTimedSprite::Render(uint32_t texId)
 }
 
 // --------------------------------------------------------------------------------------
-// Function: SetCharacterMapping
+// Function: OGLTimedSprite
 // Notes: None
 // --------------------------------------------------------------------------------------
 OGLTimedSprite::OGLTimedSprite(uint32_t programId,
@@ -43,7 +43,22 @@ OGLTimedSprite::OGLTimedSprite(uint32_t programId,
 }
 
 // --------------------------------------------------------------------------------------
-// Function: SetCharacterMapping
+// Function: OGLTimedSprite
+// Notes: None
+// --------------------------------------------------------------------------------------
+OGLTimedSprite::OGLTimedSprite(uint32_t programId,
+                               float windowW,
+                               float windowH,
+                               uint32_t pixelWidth,
+                               uint32_t pixelHeight,
+                               uint32_t hFrames,
+                               uint32_t vFrames) :
+  OGLSprite(programId, windowW, windowH, pixelWidth, pixelHeight, hFrames, vFrames)
+{
+  DisableRender();
+}
+// --------------------------------------------------------------------------------------
+// Function: ~OGLTimedSprite
 // Notes: None
 // --------------------------------------------------------------------------------------
 OGLTimedSprite::~OGLTimedSprite()

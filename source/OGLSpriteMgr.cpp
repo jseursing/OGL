@@ -88,6 +88,29 @@ OGLSprite* OGLSpriteMgr::RegisterSprite(uint32_t programId,
 // Function: RegisterSprite
 // Notes: None
 // --------------------------------------------------------------------------------------
+OGLSprite* OGLSpriteMgr::RegisterSprite(uint32_t programId,
+                                        const char* textureName,
+                                        uint32_t pixelWidth,
+                                        uint32_t pixelHeight,
+                                        uint32_t hFrames,
+                                        uint32_t vFrames)
+{
+  // Texture Name is not used for now. But it's left here in case custom code
+  // is to be written to GLSL which can then be retrieved by the textureName.
+  Sprites.emplace_back(new OGLSprite(programId, 
+                                     WindowWidth, 
+                                     WindowHeight, 
+                                     pixelWidth,
+                                     pixelHeight,
+                                     hFrames, 
+                                     vFrames));
+  return Sprites.back();
+}
+
+// --------------------------------------------------------------------------------------
+// Function: RegisterSprite
+// Notes: None
+// --------------------------------------------------------------------------------------
 void OGLSpriteMgr::RegisterSprite(OGLSprite* sprite, const char* textureName)
 {
   Sprites.emplace_back(sprite);
