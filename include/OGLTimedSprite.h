@@ -7,6 +7,7 @@ class OGLTimedSprite : public OGLSprite
 public:
   void StartRender(uint32_t ticks);
   virtual void Render(uint32_t texId);
+  uint32_t GetRemainingTicks() const;
   OGLTimedSprite(uint32_t programId,
                  const char* imagePath,
                  float windowW,

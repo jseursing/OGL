@@ -83,7 +83,7 @@ bool SoundEffect::Stop()
 // Function: IsActive
 // Notes: None
 // --------------------------------------------------------------------------------------
-bool SoundEffect::IsActive() const
+bool SoundEffect::IsActive()
 {
   if (nullptr == SoundBuffer)
   {
@@ -92,7 +92,7 @@ bool SoundEffect::IsActive() const
 
   DWORD status = 0;
   SoundBuffer->GetStatus(&status);
-  return DSBSTATUS_PLAYING == status;
+  return (DSBSTATUS_PLAYING == status);
 }
 
 // --------------------------------------------------------------------------------------
