@@ -103,6 +103,10 @@ OGLJoystickFunc   OGLExt::JoystickCallback   = nullptr;
 // --------------------------------------------------------------------------------------
 OGLExt::GLStatusTypes OGLExt::CreateContext(uint32_t displayFlags)
 {
+#if !(_DEBUG)
+  FreeConsole();
+#endif
+
   // Update Pixel attributes
   if (displayFlags & OGL_SGL_BUFFER)
   {
@@ -277,17 +281,24 @@ void OGLExt::GLSwapBuffers()
 // --------------------------------------------------------------------------------------
 void OGLExt::MainLoop()
 {
+  bool firstQuit = true;
+
   ShowWindow(WindowHandle, SW_SHOW);
-  
+
   MSG message;
   while (true)
   {
     // Process all window messages here.
-    if (PeekMessage(&message, WindowHandle, 0, 0, PM_REMOVE))
+    if (PeekMessage(&message, 0, 0, 0, PM_REMOVE))
     {
       if (WM_QUIT == message.message)
       {
-        break;
+        // Avoid destroying our game window on init
+        if (false == firstQuit)
+        {
+          break;
+        }
+        firstQuit = false;
       }
 
       TranslateMessage(&message);
