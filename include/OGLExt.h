@@ -52,6 +52,7 @@ typedef void (*OGLLDownFunc)(int32_t, int32_t);     // On Mouse-Left down
 typedef void (*OGLRUpFunc)(int32_t, int32_t);       // On Mouse-Right up
 typedef void (*OGLRDownFunc)(int32_t, int32_t);     // On Mouse-Right down
 typedef void (*OGLMouseMoveFunc)(int32_t, int32_t); // On Mouse-Move
+typedef void (*OGLJoystickFunc)(uint32_t, WPARAM, LPARAM); // On Joystick
 
 // Class definition
 class OGLExt
@@ -101,6 +102,7 @@ public:
   static void RegisterMouseRightUp(OGLRUpFunc func);
   static void RegisterMouseRightDown(OGLRDownFunc func);
   static void RegisterMouseMove(OGLMouseMoveFunc func);
+  static void RegisterJoystick(OGLJoystickFunc func);
 
 private:
 
@@ -114,6 +116,7 @@ private:
   static void InvokeMRightUpCallback(int32_t x, int32_t y);
   static void InvokeMRightDownCallback(int32_t x, int32_t y);
   static void InvokeMouseMoveCallback(int32_t x, int32_t y);
+  static void InvokeJoystickCallback(uint32_t msg, WPARAM wParam, LPARAM lParam);
 
   static void FinalizeOpenGLInitialization();
   static void LoadOpenGLExtensions();
@@ -152,4 +155,5 @@ private:
   static OGLRUpFunc        MRightUpCallback;
   static OGLRDownFunc      MRightDownCallback;
   static OGLMouseMoveFunc  MMoveCallback;
+  static OGLJoystickFunc   JoystickCallback;
 };

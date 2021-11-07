@@ -31,6 +31,7 @@ protected:
   virtual void Initialize(OriginTypeEnum origin);
   virtual void DrawGraphics(uint32_t tick) = 0;
   virtual void OnKeyPressed(int32_t key) = 0;
+  virtual void OnJoystick(uint32_t msg, WPARAM wParam, LPARAM lParam) = 0;
 
   static OGLApp* MyInstance;
 
@@ -39,6 +40,7 @@ private:
   static void Display();
   static void RefreshDisplay();
   static void KeyHandler(int32_t key);
+  static void JoystickHandler(uint32_t msg, WPARAM wParam, LPARAM lParam);
 
 
   std::future<void> ThreadHandle;

@@ -296,7 +296,7 @@ void OGLSprite::UpdateImage(int32_t x,
         for (int l = 0; l < w; ++l)
         {
           uint32_t* rgbWord = reinterpret_cast<uint32_t*>(ImageBuffer);
-          uint32_t newColor = (r << 24) | (g << 16) | (b << 8) | a;
+          uint32_t newColor = (a << 24) | (b << 16) | (g << 8) | r;
           rgbWord[((y + t) * SheetWidth) + x + l] = newColor;
         }
       }
@@ -470,8 +470,10 @@ OGLSprite::OGLSprite(uint32_t programId,
 
   // Load the image using SOIL
   ImageBuffer = reinterpret_cast<uint8_t*>(new uint32_t[SheetWidth * SheetHeight]);
-  
-  memset(ImageBuffer, 1, SheetWidth * SheetHeight * sizeof(uint32_t));
+  for (size_t i = 0; i < SheetWidth * SheetHeight; ++i)
+  {
+    reinterpret_cast<uint32_t*>(ImageBuffer)[i] = 0x00000000;
+  }
   UploadImage = true;
 
   // Initialize Textures

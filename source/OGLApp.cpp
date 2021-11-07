@@ -110,6 +110,7 @@ void OGLApp::Initialize(OriginTypeEnum origin)
                       Dimensions.right - Dimensions.left, 
                       Dimensions.bottom - Dimensions.top);
   OGLExt::RegisterKeyDown(reinterpret_cast<OGLKeyDownFunc>(KeyHandler));
+  OGLExt::RegisterJoystick(reinterpret_cast<OGLJoystickFunc>(JoystickHandler));
   OGLExt::RegisterIdle(RefreshDisplay);
   OGLExt::RegisterDraw(Display);
 
@@ -178,4 +179,13 @@ void OGLApp::RefreshDisplay()
 void OGLApp::KeyHandler(int32_t key)
 {
   MyInstance->OnKeyPressed(key);
+}
+
+// --------------------------------------------------------------------------------------
+// Function: JoystickHandler
+// Notes: None
+// --------------------------------------------------------------------------------------
+void OGLApp::JoystickHandler(uint32_t msg, WPARAM wParam, LPARAM lParam)
+{
+  MyInstance->OnJoystick(msg, wParam, lParam);
 }

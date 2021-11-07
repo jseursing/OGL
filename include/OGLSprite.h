@@ -30,7 +30,7 @@ public:
                    uint8_t r, 
                    uint8_t g, 
                    uint8_t b,
-                   uint8_t a = 1);
+                   uint8_t a = 255);
   void InvertImage();
   
   OGLSprite(uint32_t programId,
