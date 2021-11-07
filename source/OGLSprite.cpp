@@ -470,7 +470,7 @@ OGLSprite::OGLSprite(uint32_t programId,
 
   // Load the image using SOIL
   ImageBuffer = reinterpret_cast<uint8_t*>(new uint32_t[SheetWidth * SheetHeight]);
-  for (size_t i = 0; i < SheetWidth * SheetHeight; ++i)
+  for (size_t i = 0; i < static_cast<size_t>(SheetWidth * SheetHeight); ++i)
   {
     reinterpret_cast<uint32_t*>(ImageBuffer)[i] = 0x00000000;
   }
