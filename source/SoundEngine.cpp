@@ -31,11 +31,7 @@ bool SoundEngine::Initialize()
   }
 
   // Set cooperative level to priority to allow format change
-  HWND hWnd = GetForegroundWindow();
-  if (0 == hWnd)
-  {
-    hWnd = GetDesktopWindow();
-  }
+  HWND hWnd = OGLExt::GetThisWindow();
 
   hResult = instance->DirectSound->SetCooperativeLevel(hWnd, DSSCL_PRIORITY);
   if (S_OK != hResult)

@@ -102,7 +102,6 @@ public:
   static void RegisterMouseRightUp(OGLRUpFunc func);
   static void RegisterMouseRightDown(OGLRDownFunc func);
   static void RegisterMouseMove(OGLMouseMoveFunc func);
-  static void RegisterJoystick(OGLJoystickFunc func);
 
 private:
 
@@ -155,5 +154,4 @@ private:
   static OGLRUpFunc        MRightUpCallback;
   static OGLRDownFunc      MRightDownCallback;
   static OGLMouseMoveFunc  MMoveCallback;
-  static OGLJoystickFunc   JoystickCallback;
 };

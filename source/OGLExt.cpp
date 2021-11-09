@@ -1,4 +1,5 @@
 #include "OGLExt.h"
+#include <iostream>
 #include <string>
 
 // ---------------------------------------------------------------
@@ -95,7 +96,6 @@ OGLLDownFunc      OGLExt::MLeftDownCallback  = nullptr;
 OGLRUpFunc        OGLExt::MRightUpCallback   = nullptr;
 OGLRDownFunc      OGLExt::MRightDownCallback = nullptr;
 OGLMouseMoveFunc  OGLExt::MMoveCallback      = nullptr;
-OGLJoystickFunc   OGLExt::JoystickCallback   = nullptr;
 
 // --------------------------------------------------------------------------------------
 // Function: CreateContext
@@ -314,8 +314,7 @@ void OGLExt::MainLoop()
     {
       // Send PAINT message to WndProc
       message.message = WM_PAINT;
-      TranslateMessage(&message);
-      DispatchMessage(&message);
+      OGLWndProc(0, WM_PAINT, 0, 0);
 
       // Update FrameTime and Refresh flag
       FrameTime = currTime;
@@ -417,15 +416,6 @@ void OGLExt::RegisterMouseRightDown(OGLRDownFunc func)
 void OGLExt::RegisterMouseMove(OGLMouseMoveFunc func)
 {
   MMoveCallback = func;
-}
-
-// --------------------------------------------------------------------------------------
-// Function: RegisterJoystick
-// Notes: None
-// --------------------------------------------------------------------------------------
-void OGLExt::RegisterJoystick(OGLJoystickFunc func)
-{
-  JoystickCallback = func;
 }
 
 // --------------------------------------------------------------------------------------
@@ -547,18 +537,6 @@ void OGLExt::InvokeMouseMoveCallback(int32_t x, int32_t y)
   if (nullptr != MMoveCallback)
   {
     MMoveCallback(x - WindowRect.left, y - WindowRect.top);
-  }
-}
-
-// --------------------------------------------------------------------------------------
-// Function: InvokeJoystickCallback
-// Notes: None
-// --------------------------------------------------------------------------------------
-void OGLExt::InvokeJoystickCallback(uint32_t msg, WPARAM wParam, LPARAM lParam)
-{
-  if (nullptr != JoystickCallback)
-  {
-    JoystickCallback(msg, wParam, lParam);
   }
 }
 
@@ -818,15 +796,6 @@ LRESULT __stdcall OGLExt::OGLWndProc(HWND hWnd,
     {
       POINTS point = *reinterpret_cast<POINTS*>(&lParam);
       InvokeMouseMoveCallback(point.x, point.y);
-    }
-    break;
-
-    case MM_JOY1MOVE:
-    case MM_JOY1BUTTONDOWN:
-    case MM_JOY2BUTTONDOWN:
-    case MM_JOY2MOVE:
-    {
-      InvokeJoystickCallback(msg, wParam, lParam);
     }
     break;
   }
